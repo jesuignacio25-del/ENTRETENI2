@@ -1,0 +1,2591 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entreteni2<div style="font-size:14px;opacity:.75;margin-top:4px;">Creador: Jesús Ignacio</div></title>
+<meta name="author" content="Jesús Ignacio">
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    padding:20px;
+    color:white;
+    background:
+        radial-gradient(circle at 20% 0%,#7c3aed55,transparent 35%),
+        radial-gradient(circle at 100% 100%,#ec489955,transparent 35%),
+        linear-gradient(135deg,#09090f,#1b1035);
+}
+
+.container{
+    width:100%;
+    max-width:760px;
+    margin:auto;
+}
+
+.screen{
+    display:none;
+    animation:fade .25s ease;
+}
+
+.screen.active{
+    display:block;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(12px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.card{
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.13);
+    backdrop-filter:blur(18px);
+    border-radius:26px;
+    padding:30px;
+    box-shadow:0 25px 80px #0008;
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.logo h1{
+    font-size:clamp(48px,13vw,85px);
+    font-weight:900;
+    background:linear-gradient(
+        90deg,
+        #ec4899,
+        #a855f7,
+        #6366f1,
+        #22d3ee
+    );
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.logo p{
+    color:#d1d5db;
+}
+
+h2{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+h3{
+    margin-bottom:8px;
+}
+
+.btn{
+    width:100%;
+    border:none;
+    padding:16px;
+    border-radius:15px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:12px;
+    transition:.2s;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+    filter:brightness(1.1);
+}
+
+.primary{
+    background:linear-gradient(90deg,#7c3aed,#ec4899);
+    color:white;
+}
+
+.secondary{
+    background:#ffffff12;
+    color:white;
+    border:1px solid #ffffff20;
+}
+
+.red{
+    background:linear-gradient(90deg,#dc2626,#f97316);
+    color:white;
+}
+
+.green{
+    background:linear-gradient(90deg,#16a34a,#22c55e);
+    color:white;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid #ffffff22;
+    background:#0005;
+    color:white;
+    font-size:16px;
+    outline:none;
+    margin-bottom:18px;
+}
+
+.counter{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:25px;
+    margin:35px 0;
+}
+
+.counter button{
+    width:58px;
+    height:58px;
+    border:none;
+    border-radius:50%;
+    background:#7c3aed;
+    color:white;
+    font-size:32px;
+    cursor:pointer;
+}
+
+.counter span{
+    min-width:60px;
+    text-align:center;
+    font-size:48px;
+    font-weight:900;
+}
+
+.players{
+    max-height:58vh;
+    overflow-y:auto;
+}
+
+.player-box{
+    background:#0003;
+    border-radius:17px;
+    padding:18px;
+    margin-bottom:14px;
+}
+
+.player-title{
+    color:#c4b5fd;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.gender-buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-bottom:10px;
+}
+
+.gender-btn{
+    border:2px solid transparent;
+    border-radius:16px;
+    padding:16px 10px;
+    color:white;
+    cursor:pointer;
+}
+
+.gender-btn .symbol{
+    display:block;
+    font-size:38px;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+.gender-male{
+    background:#2563eb44;
+}
+
+.gender-male.selected{
+    background:#2563eb;
+    border-color:#60a5fa;
+}
+
+.gender-female{
+    background:#ec489944;
+}
+
+.gender-female.selected{
+    background:#ec4899;
+    border-color:#f9a8d4;
+}
+
+.gender-none{
+    width:100%;
+    border:1px solid #ffffff22;
+    background:#ffffff0b;
+    color:#ddd;
+    border-radius:12px;
+    padding:12px;
+    cursor:pointer;
+}
+
+.gender-none.selected{
+    background:#6b21a8;
+}
+
+.game-options,
+.mode-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.game-option,
+.mode{
+    padding:25px 14px;
+    text-align:center;
+    border-radius:20px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.game-option:hover,
+.mode:hover{
+    transform:translateY(-4px);
+}
+
+.game-option .icon,
+.mode-icon{
+    font-size:45px;
+    margin-bottom:12px;
+}
+
+.game-option p,
+.mode p{
+    color:#d1d5db;
+    font-size:13px;
+    line-height:1.4;
+}
+
+.questions-option{
+    background:#2563eb40;
+}
+
+.vote-option{
+    background:#a855f740;
+}
+
+.prefer-option{
+    background:#ea580c40;
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:18px;
+}
+
+.badge{
+    background:#ffffff12;
+    border-radius:12px;
+    padding:9px 13px;
+    font-size:14px;
+}
+
+.question-card{
+    background:#0004;
+    border-radius:22px;
+    padding:32px 20px;
+    text-align:center;
+    margin-bottom:18px;
+}
+
+.turn{
+    color:#c4b5fd;
+    font-size:14px;
+    margin-bottom:10px;
+}
+
+.current-name{
+    color:#f9a8d4;
+    font-size:34px;
+    font-weight:900;
+    margin-bottom:22px;
+}
+
+.question-text{
+    font-size:clamp(22px,5vw,33px);
+    line-height:1.35;
+    font-weight:bold;
+}
+
+.answer-buttons,
+.option-buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.answer-btn,
+.choice{
+    border:none;
+    border-radius:15px;
+    padding:17px;
+    color:white;
+    font-weight:bold;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.responded{
+    background:#16a34a;
+}
+
+.didnt-respond{
+    background:#6b7280;
+}
+
+.choice{
+    min-height:100px;
+    background:#ffffff0d;
+    border:2px solid #ffffff22;
+}
+
+.choice.selected{
+    background:#7c3aed;
+    border-color:#c4b5fd;
+}
+
+.vote-list,
+.guess-list{
+    display:grid;
+    gap:10px;
+    max-height:50vh;
+    overflow-y:auto;
+}
+
+.vote-btn,
+.guess-btn{
+    width:100%;
+    padding:16px;
+    border-radius:14px;
+    border:1px solid #ffffff22;
+    background:#ffffff0d;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.vote-btn.selected,
+.guess-btn.selected{
+    background:#7c3aed;
+    border-color:#c4b5fd;
+}
+
+.vote-status{
+    text-align:center;
+    color:#d1d5db;
+    margin:12px 0;
+}
+
+.results{
+    margin-top:20px;
+}
+
+.result-row{
+    margin-bottom:13px;
+}
+
+.result-name{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:5px;
+}
+
+.result-bar{
+    height:13px;
+    background:#ffffff12;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.result-fill{
+    height:100%;
+    background:linear-gradient(90deg,#7c3aed,#ec4899);
+}
+
+.score-card{
+    background:#0004;
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.score-card strong{
+    color:#f9a8d4;
+}
+
+.final-message{
+    background:#7c3aed2e;
+    border:1px solid #a78bfa4d;
+    border-radius:18px;
+    padding:20px;
+    margin-top:20px;
+    line-height:1.5;
+}
+
+.warning{
+    background:#f59e0b22;
+    border:1px solid #f59e0b66;
+    padding:15px;
+    border-radius:13px;
+    line-height:1.5;
+    font-size:14px;
+    margin-bottom:18px;
+}
+
+.checkbox{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.checkbox input{
+    width:auto;
+    margin:0;
+}
+
+/* PANEL DE PUNTOS */
+
+.score-panel{
+    background:rgba(0,0,0,.28);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:20px;
+    padding:18px;
+    margin-top:10px;
+}
+
+.score-panel-title{
+    text-align:center;
+    color:#c4b5fd;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.live-score{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:13px 15px;
+    margin-bottom:8px;
+    border-radius:13px;
+    background:rgba(255,255,255,.07);
+}
+
+.live-score:first-child{
+    border:1px solid #fbbf2455;
+}
+
+.live-score-name{
+    font-weight:bold;
+}
+
+.live-score-points{
+    color:#fbbf24;
+    font-weight:900;
+    font-size:18px;
+}
+
+.exit-btn{
+    background:linear-gradient(90deg,#374151,#111827);
+    border:1px solid #ffffff25;
+}
+
+/* MODAL SALIR */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    backdrop-filter:blur(8px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:1000;
+}
+
+.modal.active{
+    display:flex;
+}
+
+.modal-card{
+    width:100%;
+    max-width:480px;
+    max-height:85vh;
+    overflow-y:auto;
+    background:#171327;
+    border:1px solid #ffffff20;
+    border-radius:25px;
+    padding:25px;
+    box-shadow:0 30px 100px #000b;
+    animation:fade .2s ease;
+}
+
+.modal-card h2{
+    margin-bottom:8px;
+}
+
+.modal-subtitle{
+    text-align:center;
+    color:#aaa;
+    margin-bottom:20px;
+}
+
+.exit-warning{
+    color:#fbbf24;
+    text-align:center;
+    font-size:13px;
+    margin-top:14px;
+}
+
+@media(max-width:650px){
+
+    .card{
+        padding:22px;
+    }
+
+    .game-options,
+    .mode-grid{
+        grid-template-columns:1fr;
+    }
+
+    .current-name{
+        font-size:28px;
+    }
+
+    .option-buttons{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- INICIO -->
+<section id="startScreen" class="screen active">
+<div class="card">
+
+<div class="logo">
+<h1>Entreteni2</h1>
+<p>Preguntas, votaciones y decisiones cabronas 😈</p>
+</div>
+
+<button class="btn primary" onclick="goPlayers()">
+🎮 JUGAR
+</button>
+
+<button class="btn secondary" onclick="showRules()">
+ℹ️ ¿Cómo se juega?
+</button>
+
+</div>
+</section>
+
+
+<!-- NUMERO DE JUGADORES -->
+<section id="playersScreen" class="screen">
+<div class="card">
+
+<h2>👥 ¿Cuántas personas jugarán?</h2>
+
+<p style="text-align:center;color:#d1d5db">
+De 1 a 10 jugadores
+</p>
+
+<div class="counter">
+
+<button onclick="changePlayers(-1)">−</button>
+
+<span id="playerCount">2</span>
+
+<button onclick="changePlayers(1)">+</button>
+
+</div>
+
+<button class="btn primary" onclick="createPlayerForm()">
+CONTINUAR →
+</button>
+
+<button class="btn secondary"
+onclick="showScreen('startScreen')">
+← REGRESAR
+</button>
+
+</div>
+</section>
+
+
+<!-- NOMBRES -->
+<section id="namesScreen" class="screen">
+<div class="card">
+
+<h2>📝 Participantes</h2>
+
+<div id="playersForm" class="players"></div>
+
+<button class="btn primary" onclick="savePlayers()">
+CONTINUAR →
+</button>
+
+<button class="btn secondary"
+onclick="showScreen('playersScreen')">
+← REGRESAR
+</button>
+
+</div>
+</section>
+
+
+<!-- TIPO DE JUEGO -->
+<section id="gameTypeScreen" class="screen">
+<div class="card">
+
+<h2>🎮 ¿Qué quieren jugar?</h2>
+
+<div class="game-options">
+
+<div class="game-option questions-option"
+onclick="selectGameType('questions')">
+
+<div class="icon">💬</div>
+<h3>Preguntas</h3>
+<p>Una persona responde una pregunta.</p>
+
+</div>
+
+<div class="game-option vote-option"
+onclick="selectGameType('vote')">
+
+<div class="icon">🗳️</div>
+<h3>Votación</h3>
+<p>Todos votan quién encaja con la pregunta.</p>
+
+</div>
+
+<div class="game-option prefer-option"
+onclick="selectGameType('prefer')">
+
+<div class="icon">🤔</div>
+<h3>¿Qué prefirió?</h3>
+<p>Adivinen qué opción eligió otro jugador.</p>
+
+</div>
+
+</div>
+
+<button class="btn secondary"
+onclick="showScreen('namesScreen')">
+← REGRESAR
+</button>
+
+</div>
+</section>
+
+
+<!-- MODO -->
+<section id="modeScreen" class="screen">
+<div class="card">
+
+<h2 id="modeTitle">🔥 Elige el modo</h2>
+
+<div class="mode-grid">
+
+<div class="mode"
+style="background:#2563eb40"
+onclick="selectMode('normal')">
+
+<div class="mode-icon">😈</div>
+<h3>NORMAL</h3>
+
+<p>
+Preguntas cabronas, atrevidas y divertidas,
+sin comprometer directamente a alguien.
+</p>
+
+</div>
+
+<div class="mode"
+style="background:#dc262640"
+onclick="selectMode('spicy')">
+
+<div class="mode-icon">🌶️</div>
+<h3>PICANTE</h3>
+
+<p>
+Preguntas mucho más personales sobre
+atracción, besos y relaciones.
+</p>
+
+</div>
+
+</div>
+
+<button class="btn secondary"
+onclick="showScreen('gameTypeScreen')">
+← REGRESAR
+</button>
+
+</div>
+</section>
+
+
+<!-- CONFIRMACION PICANTE -->
+<section id="adultScreen" class="screen">
+<div class="card">
+
+<h2>🌶️ Modo Picante</h2>
+
+<div class="warning">
+Este modo contiene preguntas sobre atracción,
+besos, relaciones y situaciones personales.
+
+<br><br>
+
+Todos pueden saltarse una pregunta.
+
+<br><br>
+
+<strong>
+Todos los participantes deben ser mayores de edad.
+</strong>
+</div>
+
+<label class="checkbox">
+<input type="checkbox" id="adultCheck">
+Todos somos mayores de edad.
+</label>
+
+<button class="btn red" onclick="confirmSpicy()">
+🌶️ CONTINUAR
+</button>
+
+<button class="btn secondary"
+onclick="showScreen('modeScreen')">
+← REGRESAR
+</button>
+
+</div>
+</section>
+
+
+<!-- PREGUNTAS -->
+<section id="questionsGame" class="screen">
+<div class="card">
+
+<div class="header">
+
+<div class="badge" id="questionModeBadge">
+😈 NORMAL
+</div>
+
+<div class="badge" id="questionCounter">
+Pregunta 1
+</div>
+
+</div>
+
+<div class="question-card">
+
+<div class="turn">
+LE TOCA A
+</div>
+
+<div class="current-name" id="questionPlayer">
+Jugador
+</div>
+
+<div class="question-text" id="questionText">
+Pregunta
+</div>
+
+</div>
+
+<div class="answer-buttons">
+
+<button class="answer-btn responded"
+onclick="markAnswered(true)">
+✅ RESPONDIÓ
+<br>
+<small>+1 punto</small>
+</button>
+
+<button class="answer-btn didnt-respond"
+onclick="markAnswered(false)">
+❌ NO RESPONDIÓ
+<br>
+<small>0 puntos</small>
+</button>
+
+</div>
+
+<!-- NUEVO BOTON SALIR -->
+<button class="btn exit-btn" onclick="openScorePanel()">
+🚪 SALIR / VER PUNTOS
+</button>
+
+</div>
+</section>
+
+
+<!-- PANEL DE PUNTOS -->
+<div id="scoreModal" class="modal">
+
+<div class="modal-card">
+
+<h2>📊 Puntos actuales</h2>
+
+<div class="modal-subtitle">
+Así va la partida
+</div>
+
+<div id="liveScores"></div>
+
+<button class="btn primary"
+onclick="closeScorePanel()">
+↩️ VOLVER A LA PREGUNTA
+</button>
+
+<button class="btn secondary"
+onclick="exitToMenu()">
+🚪 SALIR AL MENÚ
+</button>
+
+<p class="exit-warning">
+Salir al menú reiniciará la partida actual.
+</p>
+
+</div>
+</div>
+
+
+<!-- VOTACION -->
+<section id="voteGame" class="screen">
+<div class="card">
+
+<div class="header">
+
+<div class="badge">
+🗳️ VOTACIÓN
+</div>
+
+<div class="badge" id="voteProgress">
+Persona 1 / 2
+</div>
+
+</div>
+
+<div class="question-card">
+
+<div class="turn">
+VOTACIÓN
+</div>
+
+<div class="question-text" id="voteQuestion">
+Pregunta
+</div>
+
+</div>
+
+<div class="vote-status" id="voteStatus">
+Elige una persona
+</div>
+
+<div class="vote-list" id="voteList"></div>
+
+<button class="btn primary"
+id="nextVoterButton"
+onclick="nextVoter()"
+disabled>
+SIGUIENTE →
+</button>
+
+<button class="btn secondary"
+onclick="restartGame()">
+🔄 REINICIAR
+</button>
+
+</div>
+</section>
+
+
+<!-- RESULTADO VOTACION -->
+<section id="voteResultScreen" class="screen">
+<div class="card">
+
+<h2>🗳️ Resultado</h2>
+
+<div id="voteResults" class="results"></div>
+
+<button class="btn primary"
+onclick="nextVoteRound()">
+🎲 SIGUIENTE VOTACIÓN
+</button>
+
+<button class="btn secondary"
+onclick="showScreen('gameTypeScreen')">
+🎮 CAMBIAR JUEGO
+</button>
+
+</div>
+</section>
+
+
+<!-- QUE PREFIRIO -->
+<section id="preferPlayerScreen" class="screen">
+<div class="card">
+
+<div class="header">
+
+<div class="badge">
+🤔 ¿QUÉ PREFIRIÓ?
+</div>
+
+<div class="badge" id="preferRound">
+Ronda 1
+</div>
+
+</div>
+
+<div class="question-card">
+
+<div class="turn">
+LE TOCA ELEGIR A
+</div>
+
+<div class="current-name" id="preferPlayerName">
+Jugador
+</div>
+
+<div class="question-text" id="preferQuestion">
+Pregunta
+</div>
+
+</div>
+
+<div class="option-buttons">
+
+<button class="choice"
+id="choiceA"
+onclick="playerChoose('A')">
+Opción A
+</button>
+
+<button class="choice"
+id="choiceB"
+onclick="playerChoose('B')">
+Opción B
+</button>
+
+</div>
+
+<button class="btn primary"
+id="confirmPrefer"
+onclick="confirmPreferChoice()"
+disabled>
+CONFIRMAR ELECCIÓN
+</button>
+
+</div>
+</section>
+
+
+<!-- ADIVINAR -->
+<section id="preferGuessScreen" class="screen">
+<div class="card">
+
+<div class="header">
+
+<div class="badge">
+🤔 ADIVINA
+</div>
+
+<div class="badge" id="guessProgress">
+1 / 2
+</div>
+
+</div>
+
+<div class="question-card">
+
+<div class="turn">
+¿QUÉ CREES QUE ELIGIÓ?
+</div>
+
+<div class="current-name" id="guessPlayerName">
+Jugador
+</div>
+
+<div class="question-text" id="guessQuestion">
+Pregunta
+</div>
+
+</div>
+
+<div class="option-buttons">
+
+<button class="choice"
+id="guessA"
+onclick="makeGuess('A')">
+A
+</button>
+
+<button class="choice"
+id="guessB"
+onclick="makeGuess('B')">
+B
+</button>
+
+</div>
+
+<button class="btn primary"
+id="nextGuessButton"
+onclick="nextGuesser()"
+disabled>
+SIGUIENTE →
+</button>
+
+</div>
+</section>
+
+
+<!-- RESULTADO PREFERENCIA -->
+<section id="preferResultScreen" class="screen">
+<div class="card">
+
+<h2>🤔 Resultado</h2>
+
+<div id="preferResults"></div>
+
+<button class="btn primary"
+onclick="startPreferRound()">
+🎲 OTRA RONDA
+</button>
+
+<button class="btn secondary"
+onclick="showScreen('gameTypeScreen')">
+🎮 CAMBIAR JUEGO
+</button>
+
+</div>
+</section>
+
+
+<!-- FINAL PREGUNTAS -->
+<section id="questionFinalScreen" class="screen">
+<div class="card">
+
+<h2>🏆 Resultado</h2>
+
+<div id="questionScores"></div>
+
+<div class="final-message"
+id="finalChallenge">
+</div>
+
+<button class="btn primary"
+onclick="showScreen('gameTypeScreen')">
+🎮 JUGAR OTRA COSA
+</button>
+
+</div>
+</section>
+
+</div>
+
+
+<script>
+
+/* ==============================
+   VARIABLES
+============================== */
+
+let playerCount=2;
+let players=[];
+let gameType="";
+let mode="";
+
+let questionPool=[];
+let votePool=[];
+let preferPool=[];
+
+let currentQuestionPlayer=-1;
+let questionNumber=0;
+
+let currentVoteQuestion="";
+let currentVoterIndex=0;
+let votes={};
+let currentVoteSelection=null;
+
+let preferPlayerIndex=0;
+let preferQuestion=null;
+let preferAnswer=null;
+let currentGuesserIndex=0;
+let guesses={};
+let preferRound=0;
+
+
+/* ==============================
+   PREGUNTAS NORMALES
+============================== */
+
+const normalQuestions=[
+
+"¿Cuál ha sido el crush más inesperado que has tenido?",
+
+"¿Alguna vez fingiste que alguien no te gustaba cuando sí te gustaba?",
+
+"¿Cuál es la cosa más atrevida que has hecho para llamar la atención de alguien?",
+
+"¿Alguna vez stalkeaste las redes de alguien que te gustaba?",
+
+"¿Cuál ha sido tu peor decisión por estar enamorado/a?",
+
+"¿Has mandado un mensaje coqueto y te arrepentiste inmediatamente?",
+
+"¿Cuál es tu mayor debilidad cuando alguien te gusta?",
+
+"¿Qué es lo primero que notas cuando alguien te parece atractivo/a?",
+
+"¿Alguna vez has tenido un crush secreto que nadie descubrió?",
+
+"¿Cuál es la excusa más absurda que has usado para hablarle a alguien?",
+
+"¿Alguna vez tardaste horas en responder un mensaje para no parecer interesado/a?",
+
+"¿Has fingido estar ocupado/a para hacerte interesante?",
+
+"¿Cuál ha sido tu peor experiencia en una cita?",
+
+"¿Alguna vez te arrepentiste de rechazar a alguien?",
+
+"¿Qué red flag ignoraste porque alguien te gustaba demasiado?",
+
+"¿Qué green flag hace que alguien te interese inmediatamente?",
+
+"¿Prefieres conquistar o que te conquisten?",
+
+"¿Qué tipo de persona suele hacerte perder la cabeza?",
+
+"¿Alguna vez confundiste amabilidad con coqueteo?",
+
+"¿Has tenido química con alguien y nunca pasó nada?",
+
+"¿Alguna vez quisiste besar a alguien pero no te atreviste?",
+
+"¿Qué hace que un beso sea inolvidable para ti?",
+
+"¿Qué prefieres: tensión romántica o conexión instantánea?",
+
+"¿Alguna vez te gustó alguien que sabías que era mala idea?",
+
+"¿Cuál ha sido tu mayor oso frente a alguien que te gustaba?",
+
+"¿Qué tan importante es la atracción física para ti?",
+
+"¿Alguna vez inventaste una excusa para encontrarte con alguien?",
+
+"¿Qué jamás admitirías en una primera cita?",
+
+"¿Alguna vez quisiste volver con alguien después de terminar?",
+
+"¿Crees que se puede seguir siendo amigo de un ex?",
+
+"¿Cuál es la cosa más celosa que has hecho por alguien?",
+
+"¿Qué haría que terminaras una relación inmediatamente?",
+
+"¿Prefieres una relación intensa o tranquila?",
+
+"¿Alguna vez te gustó alguien que estaba fuera de tu alcance?",
+
+"¿Cuál es el cumplido que más recuerdas?",
+
+"¿Qué haces cuando quieres impresionar a alguien?",
+
+"¿Alguna vez practicaste frente al espejo qué decirle a alguien?",
+
+"¿Qué es más peligroso: una mirada intensa o un mensaje a medianoche?",
+
+"¿Cuál sería tu cita perfecta si el dinero no fuera problema?",
+
+"¿Qué profesión te parece inesperadamente atractiva?",
+
+"¿Cuál es la cosa más atrevida que te gustaría hacer en una cita?",
+
+"¿Alguna vez sentiste atracción por alguien que no debías?",
+
+"¿Cuál es tu tipo de persona ideal?",
+
+"¿Has tenido un crush con alguien mayor que tú?",
+
+"¿Has tenido un crush con alguien menor que tú?",
+
+"¿Alguna vez te enamoraste de alguien que comenzó siendo tu amigo/a?",
+
+"¿Qué cosa te parece muy seductora sin ser explícita?"
+
+];
+
+
+/* ==============================
+   PREGUNTAS PICANTES
+============================== */
+
+const spicyQuestions=[
+
+"¿A quién de aquí besarías si tuvieras que elegir?",
+
+"¿Quién de aquí te parece más atractivo/a?",
+
+"¿Con quién de aquí tendrías una cita?",
+
+"¿Quién de aquí crees que besa mejor?",
+
+"¿Quién de aquí podría hacerte perder la cabeza?",
+
+"¿Quién de aquí crees que es más coqueto/a?",
+
+"¿Quién de aquí sería más difícil de conquistar?",
+
+"¿Quién de aquí podría ser tu tipo aunque normalmente no lo sea?",
+
+"¿Alguna vez has sentido atracción por alguien de este grupo?",
+
+"¿Quién de aquí crees que tendría más admiradores secretos?",
+
+"¿Quién de aquí tendría más probabilidades de tener una relación secreta?",
+
+"¿Quién de aquí crees que se enamoraría primero?",
+
+"¿Quién de aquí podría romperte el corazón?",
+
+"¿Quién de aquí tendría más probabilidades de besar a alguien inesperadamente?",
+
+"¿Quién de aquí podría convencerte de tener una cita?",
+
+"¿Quién de aquí sería más intenso/a en una relación?",
+
+"¿Quién de aquí crees que podría seducir a alguien solamente con una mirada?",
+
+"¿Quién de aquí podría tener un crush secreto durante años?",
+
+"¿Quién de aquí sería más celoso/a?",
+
+"¿Quién de aquí crees que oculta mejor cuando alguien le gusta?",
+
+"¿A quién de aquí le aceptarías una cita sin pensarlo demasiado?",
+
+"¿Quién de aquí tendría más probabilidades de volver con su ex?",
+
+"¿Quién de aquí tendría más probabilidades de enamorarse de alguien prohibido?",
+
+"¿Quién de aquí tendría más probabilidades de tener un romance secreto?",
+
+"¿Quién de aquí tendría más probabilidades de besar a su crush primero?",
+
+"¿Quién de aquí tendría más probabilidades de tener una cita espontánea?",
+
+"¿Quién de aquí tendría más probabilidades de enamorarse de alguien que acaba de conocer?"
+
+];
+
+
+/* ==============================
+   VOTACIONES
+============================== */
+
+const normalVotes=[
+
+"¿Quién es más probable que se enamore después de una sola cita?",
+
+"¿Quién es más probable que se haga famoso?",
+
+"¿Quién es más probable que se mude a otro país?",
+
+"¿Quién es más probable que se case primero?",
+
+"¿Quién es más probable que llegue tarde a su propia boda?",
+
+"¿Quién es más probable que tenga una doble vida secreta?",
+
+"¿Quién es más probable que se vuelva influencer?",
+
+"¿Quién es más probable que gane un reality show?",
+
+"¿Quién es más probable que sobreviva a un apocalipsis?",
+
+"¿Quién es más probable que se enamore de su mejor amigo/a?",
+
+"¿Quién es más probable que tenga una relación a distancia?",
+
+"¿Quién es más probable que haga una locura por una apuesta?",
+
+"¿Quién es más probable que tenga un crush secreto?",
+
+"¿Quién es más probable que vuelva con su ex?",
+
+"¿Quién es más probable que reciba una declaración de amor?"
+
+];
+
+const spicyVotes=[
+
+"¿Quién es más probable que bese a alguien inesperadamente?",
+
+"¿Quién es más probable que tenga una relación secreta?",
+
+"¿Quién es más probable que tenga un crush por alguien presente?",
+
+"¿Quién es más probable que tenga una relación con alguien mucho mayor?",
+
+"¿Quién es más probable que bese a su crush primero?",
+
+"¿Quién es más probable que tenga un romance secreto durante meses?",
+
+"¿Quién es más probable que tenga dos personas interesadas al mismo tiempo?",
+
+"¿Quién es más probable que mande un mensaje coqueto a las 3 de la mañana?",
+
+"¿Quién es más probable que tenga química con alguien completamente inesperado?",
+
+"¿Quién es más probable que termine en una relación después de una fiesta?",
+
+"¿Quién es más probable que tenga un crush que nunca confiese?",
+
+"¿Quién es más probable que se enamore primero?",
+
+"¿Quién es más probable que rompa corazones sin querer?",
+
+"¿Quién es más probable que tenga una relación intensa?",
+
+"¿Quién es más probable que se bese con alguien en una fiesta?",
+
+"¿Quién es más probable que tenga una cita espontánea con un desconocido?",
+
+"¿Quién es más probable que se enamore de alguien prohibido?",
+
+"¿Quién es más probable que tenga una relación a escondidas?",
+
+"¿Quién es más probable que vuelva a besar a alguien de su pasado?",
+
+"¿Quién es más probable que se deje llevar por la química?"
+
+];
+
+
+/* ==============================
+   PREFERENCIAS
+============================== */
+
+const normalPrefer=[
+
+{
+q:"¿Qué prefirió para una primera cita?",
+a:"Una cena elegante 🍷",
+b:"Una aventura espontánea 🏍️"
+},
+
+{
+q:"¿Qué prefirió para conquistar a alguien?",
+a:"Escribirle primero 💬",
+b:"Esperar a que le escribieran 😏"
+},
+
+{
+q:"¿Qué prefirió?",
+a:"Una relación estable ❤️",
+b:"Una relación llena de emoción 🔥"
+},
+
+{
+q:"¿Qué prefirió en una pareja?",
+a:"Mucho sentido del humor 😂",
+b:"Mucho romanticismo 🌹"
+},
+
+{
+q:"¿Qué prefirió para una cita?",
+a:"Película en casa 🎬",
+b:"Salir toda la noche 🌃"
+},
+
+{
+q:"¿Qué prefirió?",
+a:"Recibir una sorpresa 🎁",
+b:"Preparar una sorpresa 💝"
+},
+
+{
+q:"¿Qué prefirió?",
+a:"Una persona muy extrovertida 🕺",
+b:"Una persona tranquila 🌙"
+}
+
+];
+
+const spicyPrefer=[
+
+{
+q:"Si tuviera que besar a una persona de aquí, ¿qué preferiría?",
+dynamic:true
+},
+
+{
+q:"Si tuviera que elegir una cita, ¿qué preferiría?",
+a:"Una cita romántica ❤️",
+b:"Una cita con mucha tensión 🔥"
+},
+
+{
+q:"¿Qué preferiría en una persona?",
+a:"Una mirada irresistible 👀",
+b:"Una personalidad peligrosa 😈"
+},
+
+{
+q:"Si tuviera que elegir, ¿qué preferiría?",
+a:"Un beso inesperado 💋",
+b:"Un beso después de mucha tensión 🔥"
+},
+
+{
+q:"¿Qué preferiría?",
+a:"Que alguien le confesara que le gusta ❤️",
+b:"Descubrir que alguien lleva meses coqueteando 😏"
+},
+
+{
+q:"¿Qué preferiría en una relación?",
+a:"Mucha química 🔥",
+b:"Mucha confianza ❤️"
+},
+
+{
+q:"Si pudiera elegir a alguien para una cita secreta, ¿qué preferiría?",
+dynamic:true
+}
+
+];
+
+
+/* ==============================
+   NAVEGACION
+============================== */
+
+function showScreen(id){
+
+    document.querySelectorAll(".screen")
+    .forEach(s=>s.classList.remove("active"));
+
+    document.getElementById(id)
+    .classList.add("active");
+}
+
+function goPlayers(){
+    showScreen("playersScreen");
+}
+
+function changePlayers(amount){
+
+    playerCount+=amount;
+
+    if(playerCount<1) playerCount=1;
+    if(playerCount>10) playerCount=10;
+
+    document.getElementById("playerCount")
+    .textContent=playerCount;
+}
+
+
+/* ==============================
+   FORMULARIO
+============================== */
+
+function createPlayerForm(){
+
+    const form=document.getElementById("playersForm");
+
+    form.innerHTML="";
+
+    for(let i=0;i<playerCount;i++){
+
+        form.innerHTML+=`
+
+        <div class="player-box">
+
+            <div class="player-title">
+                PARTICIPANTE ${i+1}
+            </div>
+
+            <label>Nombre</label>
+
+            <input
+                id="name_${i}"
+                maxlength="20"
+                placeholder="Ej. Jugador 1"
+            >
+
+            <label>Género</label>
+
+            <div class="gender-buttons">
+
+                <button
+                    type="button"
+                    class="gender-btn gender-male"
+                    id="male_${i}"
+                    onclick="setGender(${i},'M')">
+
+                    <span class="symbol">♂</span>
+                    Masculino
+
+                </button>
+
+                <button
+                    type="button"
+                    class="gender-btn gender-female"
+                    id="female_${i}"
+                    onclick="setGender(${i},'F')">
+
+                    <span class="symbol">♀</span>
+                    Femenino
+
+                </button>
+
+            </div>
+
+            <button
+                type="button"
+                class="gender-none"
+                id="none_${i}"
+                onclick="setGender(${i},'N')">
+
+                Prefiero no decirlo
+
+            </button>
+
+            <input
+                type="hidden"
+                id="gender_${i}"
+                value="N"
+            >
+
+        </div>
+        `;
+    }
+
+    showScreen("namesScreen");
+}
+
+
+function setGender(index,gender){
+
+    document.getElementById(`gender_${index}`).value=gender;
+
+    document.getElementById(`male_${index}`)
+    .classList.remove("selected");
+
+    document.getElementById(`female_${index}`)
+    .classList.remove("selected");
+
+    document.getElementById(`none_${index}`)
+    .classList.remove("selected");
+
+    if(gender==="M")
+        document.getElementById(`male_${index}`)
+        .classList.add("selected");
+
+    if(gender==="F")
+        document.getElementById(`female_${index}`)
+        .classList.add("selected");
+
+    if(gender==="N")
+        document.getElementById(`none_${index}`)
+        .classList.add("selected");
+}
+
+
+function savePlayers(){
+
+    players=[];
+
+    for(let i=0;i<playerCount;i++){
+
+        const name=
+            document.getElementById(`name_${i}`)
+            .value.trim();
+
+        const gender=
+            document.getElementById(`gender_${i}`).value;
+
+        if(!name){
+
+            alert(
+                `Falta el nombre del participante ${i+1}.`
+            );
+
+            return;
+        }
+
+        players.push({
+            name:name,
+            gender:gender,
+            points:0
+        });
+    }
+
+    showScreen("gameTypeScreen");
+}
+
+
+/* ==============================
+   TIPO
+============================== */
+
+function selectGameType(type){
+
+    gameType=type;
+
+    let title="🔥 Elige el modo";
+
+    if(type==="questions")
+        title="💬 Modo de preguntas";
+
+    if(type==="vote")
+        title="🗳️ Modo de votación";
+
+    if(type==="prefer")
+        title="🤔 Modo ¿Qué prefirió?";
+
+    document.getElementById("modeTitle")
+    .textContent=title;
+
+    showScreen("modeScreen");
+}
+
+
+function selectMode(selectedMode){
+
+    mode=selectedMode;
+
+    if(mode==="spicy"){
+
+        document.getElementById("adultCheck")
+        .checked=false;
+
+        showScreen("adultScreen");
+
+        return;
+    }
+
+    startGame();
+}
+
+
+function confirmSpicy(){
+
+    if(!document.getElementById("adultCheck").checked){
+
+        alert(
+            "Debes confirmar que todos los participantes son mayores de edad."
+        );
+
+        return;
+    }
+
+    startGame();
+}
+
+
+/* ==============================
+   INICIAR
+============================== */
+
+function startGame(){
+
+    questionPool=
+        mode==="normal"
+        ? [...normalQuestions]
+        : [...spicyQuestions];
+
+    votePool=
+        mode==="normal"
+        ? [...normalVotes]
+        : [...spicyVotes];
+
+    preferPool=
+        mode==="normal"
+        ? [...normalPrefer]
+        : [...spicyPrefer];
+
+    players.forEach(p=>p.points=0);
+
+    questionNumber=0;
+    currentQuestionPlayer=-1;
+
+    /*
+       Si existe Jugador 1 agregamos
+       su pequeña pregunta especial.
+       Se agrega solo una vez por partida.
+    */
+
+    const andreaIndex=players.findIndex(
+        p=>p.name.toLowerCase()==="Jugador 1"
+    );
+
+    if(
+        andreaIndex!==-1 &&
+        !questionPool.includes(
+            "Jugador 1, ¿qué se siente besar hormigas? 🐜😂"
+        )
+    ){
+
+        questionPool.push(
+            "Jugador 1, ¿qué se siente besar hormigas? 🐜😂"
+        );
+    }
+
+    if(gameType==="questions"){
+
+        showScreen("questionsGame");
+        nextQuestion();
+
+    }else if(gameType==="vote"){
+
+        startVoteRound();
+
+    }else{
+
+        preferRound=0;
+        startPreferRound();
+    }
+}
+
+
+/* ==============================
+   RANDOM
+============================== */
+
+function random(max){
+    return Math.floor(Math.random()*max);
+}
+
+function chooseDifferentPlayer(previous){
+
+    if(players.length<=1)
+        return 0;
+
+    let index;
+
+    do{
+        index=random(players.length);
+    }while(index===previous);
+
+    return index;
+}
+
+
+/* ==============================
+   PREGUNTAS
+============================== */
+
+function nextQuestion(){
+
+    if(questionPool.length===0){
+
+        finishQuestionGame();
+        return;
+    }
+
+    currentQuestionPlayer=
+        chooseDifferentPlayer(
+            currentQuestionPlayer
+        );
+
+    const index=random(questionPool.length);
+
+    const question=
+        questionPool.splice(index,1)[0];
+
+    questionNumber++;
+
+    document.getElementById("questionPlayer")
+    .textContent=
+    players[currentQuestionPlayer].name;
+
+    document.getElementById("questionText")
+    .textContent=question;
+
+    document.getElementById("questionCounter")
+    .textContent=
+    `Pregunta ${questionNumber}`;
+
+    document.getElementById("questionModeBadge")
+    .textContent=
+        mode==="normal"
+        ? "😈 NORMAL"
+        : "🌶️ PICANTE";
+}
+
+
+function markAnswered(answered){
+
+    if(answered){
+
+        players[currentQuestionPlayer].points++;
+
+    }
+
+    nextQuestion();
+}
+
+
+/* =================================================
+   NUEVO: PANEL DE PUNTOS DESDE PREGUNTAS
+================================================= */
+
+function openScorePanel(){
+
+    const container=
+        document.getElementById("liveScores");
+
+    container.innerHTML="";
+
+    /*
+       Ordenamos solamente para mostrar.
+       Los puntos reales de los jugadores
+       no se modifican.
+    */
+
+    const sorted=[...players].sort(
+        (a,b)=>b.points-a.points
+    );
+
+    sorted.forEach((player,index)=>{
+
+        container.innerHTML+=`
+
+        <div class="live-score">
+
+            <div class="live-score-name">
+
+                ${index===0 && player.points>0 ? "🏆 " : ""}
+
+                ${escapeHTML(player.name)}
+
+            </div>
+
+            <div class="live-score-points">
+
+                ${player.points}
+                ${player.points===1 ? "punto" : "puntos"}
+
+            </div>
+
+        </div>
+
+        `;
+    });
+
+    document
+        .getElementById("scoreModal")
+        .classList.add("active");
+}
+
+
+function closeScorePanel(){
+
+    document
+        .getElementById("scoreModal")
+        .classList.remove("active");
+}
+
+
+function exitToMenu(){
+
+    const ok=confirm(
+        "¿Seguro que quieres salir? La partida actual se perderá."
+    );
+
+    if(!ok)
+        return;
+
+    closeScorePanel();
+
+    players.forEach(p=>p.points=0);
+
+    showScreen("startScreen");
+}
+
+
+/* ==============================
+   FINAL PREGUNTAS
+============================== */
+
+function finishQuestionGame(){
+
+    showScreen("questionFinalScreen");
+
+    const container=
+        document.getElementById("questionScores");
+
+    container.innerHTML="";
+
+    const sorted=
+        [...players].sort(
+            (a,b)=>b.points-a.points
+        );
+
+    sorted.forEach((player,index)=>{
+
+        container.innerHTML+=`
+
+        <div class="score-card">
+
+            <span>
+                ${index===0 ? "🏆 " : ""}
+                <strong>
+                    ${escapeHTML(player.name)}
+                </strong>
+            </span>
+
+            <span>
+                ${player.points} puntos
+            </span>
+
+        </div>
+
+        `;
+    });
+
+    const max=Math.max(...players.map(p=>p.points));
+    const min=Math.min(...players.map(p=>p.points));
+
+    const winner=players.find(
+        p=>p.points===max
+    );
+
+    const loser=players.find(
+        p=>p.points===min
+    );
+
+    const final=
+        document.getElementById("finalChallenge");
+
+    if(players.length===1){
+
+        final.innerHTML=
+        "🎉 Terminaste la partida.";
+
+        return;
+    }
+
+    if(winner.name===loser.name){
+
+        final.innerHTML=
+        `🤝 Todos terminaron con ${max} puntos.`;
+
+    }else{
+
+        final.innerHTML=`
+
+        🏆 <strong>
+        ${escapeHTML(winner.name)}
+        </strong>
+
+        fue quien más respondió.
+
+        <br><br>
+
+        Puede hacerle una pregunta a
+
+        <strong>
+        ${escapeHTML(loser.name)}
+        </strong>,
+
+        que tuvo menos puntos.
+
+        😈
+
+        `;
+    }
+}
+
+
+/* ==============================
+   VOTACION
+============================== */
+
+function startVoteRound(){
+
+    if(votePool.length===0){
+
+        alert(
+            "🔥 Ya se terminaron todas las preguntas de votación."
+        );
+
+        showScreen("gameTypeScreen");
+        return;
+    }
+
+    const index=random(votePool.length);
+
+    currentVoteQuestion=
+        votePool.splice(index,1)[0];
+
+    votes={};
+
+    players.forEach(p=>{
+        votes[p.name]=0;
+    });
+
+    currentVoterIndex=0;
+    currentVoteSelection=null;
+
+    document.getElementById("voteQuestion")
+    .textContent=currentVoteQuestion;
+
+    showScreen("voteGame");
+
+    renderVoter();
+}
+
+
+function renderVoter(){
+
+    currentVoteSelection=null;
+
+    document.getElementById("voteProgress")
+    .textContent=
+    `Persona ${currentVoterIndex+1} / ${players.length}`;
+
+    document.getElementById("voteStatus")
+    .textContent=
+    `Turno de ${players[currentVoterIndex].name}`;
+
+    const list=
+        document.getElementById("voteList");
+
+    list.innerHTML="";
+
+    players.forEach(player=>{
+
+        const button=
+            document.createElement("button");
+
+        button.className="vote-btn";
+        button.textContent=player.name;
+
+        button.onclick=()=>{
+
+            currentVoteSelection=
+                player.name;
+
+            document
+                .querySelectorAll(".vote-btn")
+                .forEach(btn=>
+                    btn.classList.remove("selected")
+                );
+
+            button.classList.add("selected");
+
+            document.getElementById("nextVoterButton")
+            .disabled=false;
+        };
+
+        list.appendChild(button);
+    });
+
+    document.getElementById("nextVoterButton")
+    .disabled=true;
+}
+
+
+function nextVoter(){
+
+    if(!currentVoteSelection)
+        return;
+
+    votes[currentVoteSelection]++;
+
+    currentVoterIndex++;
+
+    if(currentVoterIndex>=players.length){
+
+        showVoteResults();
+        return;
+    }
+
+    renderVoter();
+}
+
+
+function showVoteResults(){
+
+    showScreen("voteResultScreen");
+
+    const container=
+        document.getElementById("voteResults");
+
+    container.innerHTML="";
+
+    const maxVotes=
+        Math.max(...Object.values(votes));
+
+    players.forEach(player=>{
+
+        const amount=votes[player.name];
+
+        const percentage=
+            players.length
+            ? amount/players.length*100
+            : 0;
+
+        container.innerHTML+=`
+
+        <div class="result-row">
+
+            <div class="result-name">
+
+                <strong>
+                    ${escapeHTML(player.name)}
+                </strong>
+
+                <span>
+                    ${amount}
+                    ${amount===1 ? "voto" : "votos"}
+                </span>
+
+            </div>
+
+            <div class="result-bar">
+
+                <div
+                    class="result-fill"
+                    style="width:${percentage}%">
+                </div>
+
+            </div>
+
+        </div>
+
+        `;
+    });
+
+    const leaders=
+        players.filter(
+            p=>votes[p.name]===maxVotes
+        );
+
+    container.innerHTML+=`
+
+    <div class="final-message">
+
+        ${
+            leaders.length===1
+            ? `🏆 ${escapeHTML(leaders[0].name)}
+               recibió ${maxVotes} votos.`
+            : `🤝 Empate entre:
+               ${leaders.map(
+                   p=>escapeHTML(p.name)
+               ).join(", ")}
+               con ${maxVotes} votos.`
+        }
+
+    </div>
+
+    `;
+}
+
+
+function nextVoteRound(){
+    startVoteRound();
+}
+
+
+/* ==============================
+   QUE PREFIRIO
+============================== */
+
+function startPreferRound(){
+
+    if(preferPool.length===0){
+
+        alert(
+            "🔥 Ya se terminaron todas las preguntas de este modo."
+        );
+
+        showScreen("gameTypeScreen");
+        return;
+    }
+
+    preferRound++;
+
+    preferPlayerIndex=random(players.length);
+
+    const index=random(preferPool.length);
+
+    preferQuestion=
+        preferPool.splice(index,1)[0];
+
+    if(preferQuestion.dynamic){
+
+        if(players.length<2){
+
+            alert(
+                "Para esta pregunta se necesitan al menos 2 jugadores."
+            );
+
+            startPreferRound();
+            return;
+        }
+
+        let a=random(players.length);
+
+        let b;
+
+        do{
+            b=random(players.length);
+        }while(b===a);
+
+        preferQuestion={
+            q:preferQuestion.q,
+            a:players[a].name,
+            b:players[b].name
+        };
+    }
+
+    document.getElementById("preferRound")
+    .textContent=`Ronda ${preferRound}`;
+
+    document.getElementById("preferPlayerName")
+    .textContent=
+        players[preferPlayerIndex].name;
+
+    document.getElementById("preferQuestion")
+    .textContent=
+        preferQuestion.q;
+
+    document.getElementById("choiceA")
+    .textContent=
+        preferQuestion.a;
+
+    document.getElementById("choiceB")
+    .textContent=
+        preferQuestion.b;
+
+    document.getElementById("choiceA")
+    .classList.remove("selected");
+
+    document.getElementById("choiceB")
+    .classList.remove("selected");
+
+    preferAnswer=null;
+
+    document.getElementById("confirmPrefer")
+    .disabled=true;
+
+    showScreen("preferPlayerScreen");
+}
+
+
+function playerChoose(choice){
+
+    preferAnswer=choice;
+
+    document.getElementById("choiceA")
+    .classList.remove("selected");
+
+    document.getElementById("choiceB")
+    .classList.remove("selected");
+
+    document.getElementById(
+        choice==="A" ? "choiceA" : "choiceB"
+    ).classList.add("selected");
+
+    document.getElementById("confirmPrefer")
+    .disabled=false;
+}
+
+
+function confirmPreferChoice(){
+
+    if(!preferAnswer)
+        return;
+
+    guesses={};
+
+    currentGuesserIndex=0;
+
+    while(
+        currentGuesserIndex<players.length &&
+        currentGuesserIndex===preferPlayerIndex
+    ){
+        currentGuesserIndex++;
+    }
+
+    if(players.length===1){
+
+        showPreferResults();
+        return;
+    }
+
+    showScreen("preferGuessScreen");
+
+    renderGuesser();
+}
+
+
+function renderGuesser(){
+
+    const guesser=
+        players[currentGuesserIndex];
+
+    document.getElementById("guessProgress")
+    .textContent=
+        `${currentGuesserIndex+1} / ${players.length}`;
+
+    document.getElementById("guessPlayerName")
+    .textContent=guesser.name;
+
+    document.getElementById("guessQuestion")
+    .textContent=
+        `¿Qué crees que eligió ${players[preferPlayerIndex].name}?`;
+
+    document.getElementById("guessA")
+    .textContent=preferQuestion.a;
+
+    document.getElementById("guessB")
+    .textContent=preferQuestion.b;
+
+    document.getElementById("guessA")
+    .classList.remove("selected");
+
+    document.getElementById("guessB")
+    .classList.remove("selected");
+
+    document.getElementById("nextGuessButton")
+    .disabled=true;
+}
+
+
+function makeGuess(choice){
+
+    guesses[
+        players[currentGuesserIndex].name
+    ]=choice;
+
+    document.getElementById("guessA")
+    .classList.remove("selected");
+
+    document.getElementById("guessB")
+    .classList.remove("selected");
+
+    document.getElementById(
+        choice==="A" ? "guessA" : "guessB"
+    ).classList.add("selected");
+
+    document.getElementById("nextGuessButton")
+    .disabled=false;
+}
+
+
+function nextGuesser(){
+
+    currentGuesserIndex++;
+
+    while(
+        currentGuesserIndex<players.length &&
+        currentGuesserIndex===preferPlayerIndex
+    ){
+        currentGuesserIndex++;
+    }
+
+    if(currentGuesserIndex>=players.length){
+
+        showPreferResults();
+        return;
+    }
+
+    renderGuesser();
+}
+
+
+function showPreferResults(){
+
+    showScreen("preferResultScreen");
+
+    const container=
+        document.getElementById("preferResults");
+
+    container.innerHTML=`
+
+    <div class="question-card">
+
+        <div class="turn">
+            ${escapeHTML(players[preferPlayerIndex].name)}
+            REALMENTE ELIGIÓ
+        </div>
+
+        <div class="current-name">
+
+            ${
+                preferAnswer==="A"
+                ? escapeHTML(preferQuestion.a)
+                : escapeHTML(preferQuestion.b)
+            }
+
+        </div>
+
+    </div>
+
+    `;
+
+    let correct=0;
+
+    players.forEach(player=>{
+
+        if(
+            player.name===
+            players[preferPlayerIndex].name
+        ){
+            return;
+        }
+
+        const right=
+            guesses[player.name]===preferAnswer;
+
+        if(right) correct++;
+
+        container.innerHTML+=`
+
+        <div class="score-card">
+
+            <span>
+                ${right ? "✅" : "❌"}
+                <strong>
+                    ${escapeHTML(player.name)}
+                </strong>
+            </span>
+
+            <span>
+                ${right ? "Acertó" : "Falló"}
+            </span>
+
+        </div>
+
+        `;
+    });
+
+    container.innerHTML+=`
+
+    <div class="final-message">
+
+        🎯
+
+        <strong>${correct}</strong>
+
+        de ${Math.max(players.length-1,0)}
+        personas acertaron.
+
+    </div>
+
+    `;
+}
+
+
+/* ==============================
+   REINICIAR
+============================== */
+
+function restartGame(){
+
+    if(!confirm("¿Seguro que quieres reiniciar?"))
+        return;
+
+    startGame();
+}
+
+
+/* ==============================
+   REGLAS
+============================== */
+
+function showRules(){
+
+    alert(
+
+        "ENTRETENI2\n\n"+
+
+        "💬 PREGUNTAS\n"+
+        "Una persona responde. Si responde obtiene 1 punto.\n"+
+        "El botón 🚪 permite ver los puntos de todos durante la partida.\n\n"+
+
+        "🗳️ VOTACIÓN\n"+
+        "Todos votan antes de mostrar el resultado.\n\n"+
+
+        "🤔 ¿QUÉ PREFIRIÓ?\n"+
+        "Un jugador elige una opción y los demás intentan adivinar.\n\n"+
+
+        "😈 NORMAL\n"+
+        "Preguntas atrevidas y cabronas.\n\n"+
+
+        "🌶️ PICANTE\n"+
+        "Preguntas más personales. Todos deben ser mayores de edad.\n\n"+
+
+        "Las preguntas no se repiten durante la partida."
+
+    );
+}
+
+
+/* ==============================
+   SEGURIDAD HTML
+============================== */
+
+function escapeHTML(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+</script>
+
+</body>
+</html>
