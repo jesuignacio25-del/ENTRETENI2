@@ -1,443 +1,558 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Entreteni2</title>
-<meta name="author" content="Jesús Ignacio">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Entreteni2</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="container">
+<div class="app">
 
-<section id="startScreen" class="screen active">
-<div class="card">
+    <!-- ================= INICIO ================= -->
 
-<div class="logo">
-<h1>Entreteni2</h1>
-<p>Preguntas, votaciones y decisiones cabronas 😈</p>
-</div>
+    <section id="startScreen" class="screen active">
 
-<button class="btn primary" onclick="goPlayers()">
-🎮 JUGAR
-</button>
+        <div class="card start-card">
 
-<button class="btn secondary" onclick="showRules()">
-ℹ️ ¿Cómo se juega?
-</button>
+            <div class="logo">
+                <div class="logo-icon">🎲</div>
+                <h1>Entreteni2</h1>
+                <p>Preguntas, juegos y cosas para que nunca se acabe la conversación.</p>
+            </div>
 
-</div>
-</section>
+            <button class="btn primary" onclick="goPlayers()">
+                🎮 JUGAR
+            </button>
 
+            <button class="btn secondary" onclick="showRules()">
+                ℹ️ ¿CÓMO SE JUEGA?
+            </button>
 
-<section id="playersScreen" class="screen">
-<div class="card">
+            <p class="creator">
+                Creador: Jesús Ignacio
+            </p>
 
-<h2>👥 ¿Cuántas personas jugarán?</h2>
+        </div>
 
-<p class="center-text">De 1 a 10 jugadores</p>
+    </section>
 
-<div class="counter">
-<button onclick="changePlayers(-1)">−</button>
-<span id="playerCount">2</span>
-<button onclick="changePlayers(1)">+</button>
-</div>
 
-<button class="btn primary" onclick="createPlayerForm()">
-CONTINUAR →
-</button>
+    <!-- ================= JUGADORES ================= -->
 
-<button class="btn secondary" onclick="showScreen('startScreen')">
-← REGRESAR
-</button>
+    <section id="playersScreen" class="screen">
 
-</div>
-</section>
+        <div class="card">
 
+            <h2>👥 ¿Cuántas personas jugarán?</h2>
 
-<section id="namesScreen" class="screen">
-<div class="card">
+            <p class="subtitle">
+                Elige entre 1 y 10 jugadores.
+            </p>
 
-<h2>📝 Participantes</h2>
+            <div class="counter">
 
-<div id="playersForm" class="players"></div>
+                <button onclick="changePlayers(-1)">−</button>
 
-<button class="btn primary" onclick="savePlayers()">
-CONTINUAR →
-</button>
+                <span id="playerCount">2</span>
 
-<button class="btn secondary" onclick="showScreen('playersScreen')">
-← REGRESAR
-</button>
+                <button onclick="changePlayers(1)">+</button>
 
-</div>
-</section>
+            </div>
 
+            <button class="btn primary" onclick="createPlayerForm()">
+                CONTINUAR →
+            </button>
 
-<section id="gameTypeScreen" class="screen">
-<div class="card">
+            <button class="btn secondary" onclick="showScreen('startScreen')">
+                ← REGRESAR
+            </button>
 
-<h2>🎮 ¿Qué quieren jugar?</h2>
+        </div>
 
-<div class="game-options">
+    </section>
 
-<div class="game-option questions-option"
-onclick="selectGameType('questions')">
-<div class="icon">💬</div>
-<h3>Preguntas</h3>
-<p>Una persona responde una pregunta.</p>
-</div>
 
-<div class="game-option vote-option"
-onclick="selectGameType('vote')">
-<div class="icon">🗳️</div>
-<h3>Votación</h3>
-<p>Todos votan quién encaja con la pregunta.</p>
-</div>
+    <!-- ================= NOMBRES ================= -->
 
-<div class="game-option prefer-option"
-onclick="selectGameType('prefer')">
-<div class="icon">🤔</div>
-<h3>¿Qué prefirió?</h3>
-<p>Adivinen qué opción eligió otro jugador.</p>
-</div>
+    <section id="namesScreen" class="screen">
 
-</div>
+        <div class="card">
 
-<button class="btn secondary"
-onclick="showScreen('namesScreen')">
-← REGRESAR
-</button>
+            <h2>📝 Participantes</h2>
 
-</div>
-</section>
+            <p class="subtitle">
+                Escribe el nombre y selecciona el género de cada jugador.
+            </p>
 
+            <div id="playersForm"></div>
 
-<section id="modeScreen" class="screen">
-<div class="card">
+            <button class="btn primary" onclick="savePlayers()">
+                CONTINUAR →
+            </button>
 
-<h2 id="modeTitle">🔥 Elige el modo</h2>
+            <button class="btn secondary" onclick="showScreen('playersScreen')">
+                ← REGRESAR
+            </button>
 
-<div class="mode-grid">
+        </div>
 
-<div class="mode normal-mode"
-onclick="selectMode('normal')">
-<div class="mode-icon">😈</div>
-<h3>NORMAL</h3>
-<p>
-Preguntas atrevidas, divertidas y situaciones
-para hacer hablar al grupo.
-</p>
-</div>
+    </section>
 
-<div class="mode spicy-mode"
-onclick="selectMode('spicy')">
-<div class="mode-icon">🌶️</div>
-<h3>PICANTE</h3>
-<p>
-Preguntas más personales, incómodas y
-atrevidas, pero apropiadas.
-</p>
-</div>
 
-</div>
+    <!-- ================= TIPO DE JUEGO ================= -->
 
-<button class="btn secondary"
-onclick="showScreen('gameTypeScreen')">
-← REGRESAR
-</button>
+    <section id="gameTypeScreen" class="screen">
 
-</div>
-</section>
+        <div class="card">
 
+            <h2>🎮 ¿Qué quieren jugar?</h2>
 
-<section id="questionsGame" class="screen">
-<div class="card">
+            <div class="game-grid">
 
-<div class="header">
-<div class="badge" id="questionModeBadge">😈 NORMAL</div>
-<div class="badge" id="questionCounter">Pregunta 1</div>
-</div>
+                <button class="game-card" onclick="selectGameType('conversation')">
+                    <span>🗣️</span>
+                    <strong>Temas de conversación</strong>
+                    <small>Para sacar plática y conocer opiniones.</small>
+                </button>
 
-<div class="question-card">
+                <button class="game-card" onclick="selectGameType('whatif')">
+                    <span>🎭</span>
+                    <strong>¿Qué harías si...?</strong>
+                    <small>Situaciones realistas y divertidas.</small>
+                </button>
 
-<div class="turn">LE TOCA A</div>
+                <button class="game-card" onclick="selectGameType('spicy')">
+                    <span>🌶️</span>
+                    <strong>Picante</strong>
+                    <small>Preguntas personales y atrevidas, sin contenido explícito.</small>
+                </button>
 
-<div class="current-name" id="questionPlayer">
-Jugador
-</div>
+                <button class="game-card" onclick="selectGameType('whoto')">
+                    <span>👥</span>
+                    <strong>¿A quién?</strong>
+                    <small>Elige a otra persona según la pregunta.</small>
+                </button>
 
-<div class="question-text" id="questionText">
-Pregunta
-</div>
+                <button class="game-card" onclick="selectGameType('context')">
+                    <span>🕵️</span>
+                    <strong>Sin contexto</strong>
+                    <small>Explica en qué situación dirías una frase.</small>
+                </button>
 
-</div>
+                <button class="game-card" onclick="selectGameType('opinion')">
+                    <span>🔄</span>
+                    <strong>Cambia de opinión</strong>
+                    <small>Dos personas intentan convencerte.</small>
+                </button>
 
-<div class="answer-buttons">
+                <button class="game-card" onclick="selectGameType('order')">
+                    <span>🔢</span>
+                    <strong>Ordénense</strong>
+                    <small>Ordena al grupo según una situación.</small>
+                </button>
 
-<button class="answer-btn responded"
-onclick="markAnswered(true)">
-✅ RESPONDIÓ
-<br>
-<small>+1 punto</small>
-</button>
+                <button class="game-card" onclick="selectGameType('guess')">
+                    <span>🕵️</span>
+                    <strong>Adivina al jugador</strong>
+                    <small>Adivina quién escribió una respuesta.</small>
+                </button>
 
-<button class="answer-btn didnt-respond"
-onclick="markAnswered(false)">
-❌ NO RESPONDIÓ
-<br>
-<small>0 puntos</small>
-</button>
+                <button class="game-card" onclick="selectGameType('believe')">
+                    <span>🧠</span>
+                    <strong>¿Creerías si...?</strong>
+                    <small>Decide si crees algo sobre otro jugador.</small>
+                </button>
 
-</div>
+                <button class="game-card" onclick="selectGameType('continue')">
+                    <span>🔄</span>
+                    <strong>Continúa</strong>
+                    <small>Responde y crea la siguiente pregunta.</small>
+                </button>
 
-<button class="btn exit-btn" onclick="openScorePanel()">
-📊 VER PUNTOS
-</button>
+            </div>
 
-</div>
-</section>
+            <button class="btn secondary" onclick="showScreen('namesScreen')">
+                ← REGRESAR
+            </button>
 
+        </div>
 
-<div id="scoreModal" class="modal">
+    </section>
 
-<div class="modal-card">
 
-<h2>📊 Puntos actuales</h2>
+    <!-- ================= MODO NORMAL / PICANTE ================= -->
 
-<div class="modal-subtitle">
-Así va la partida
-</div>
+    <section id="modeScreen" class="screen">
 
-<div id="liveScores"></div>
+        <div class="card">
 
-<button class="btn primary"
-onclick="closeScorePanel()">
-↩️ VOLVER
-</button>
+            <h2>🔥 Elige el modo</h2>
 
-<button class="btn secondary"
-onclick="exitToMenu()">
-🚪 SALIR AL MENÚ
-</button>
+            <div class="mode-grid">
 
-</div>
-</div>
+                <button class="mode-card normal" onclick="selectMode('normal')">
+                    <span>😎</span>
+                    <strong>NORMAL</strong>
+                    <small>Preguntas divertidas, interesantes y personales.</small>
+                </button>
 
+                <button class="mode-card spicy" onclick="selectMode('spicy')">
+                    <span>🌶️</span>
+                    <strong>PICANTE</strong>
+                    <small>Más personal, atrevido y con situaciones incómodas.</small>
+                </button>
 
-<section id="voteGame" class="screen">
-<div class="card">
+            </div>
 
-<div class="header">
+            <button class="btn primary" onclick="startSelectedGame()">
+                🚀 COMENZAR
+            </button>
 
-<div class="badge">🗳️ VOTACIÓN</div>
+            <button class="btn secondary" onclick="showScreen('gameTypeScreen')">
+                ← REGRESAR
+            </button>
 
-<div class="badge" id="voteProgress">
-Persona 1 / 2
-</div>
+        </div>
 
-</div>
+    </section>
 
-<div class="question-card">
 
-<div class="turn">VOTACIÓN</div>
+    <!-- ================= JUEGO GENERAL ================= -->
 
-<div class="question-text" id="voteQuestion">
-Pregunta
-</div>
+    <section id="gameScreen" class="screen">
 
-</div>
+        <div class="card game-card">
 
-<div class="vote-status" id="voteStatus">
-Elige una persona
-</div>
+            <div class="game-header">
 
-<div class="vote-list" id="voteList"></div>
+                <span id="gameBadge" class="badge">
+                    JUEGO
+                </span>
 
-<button class="btn primary"
-id="nextVoterButton"
-onclick="nextVoter()"
-disabled>
-SIGUIENTE →
-</button>
+                <span id="gameCounter" class="badge">
+                    1
+                </span>
 
-<button class="btn secondary"
-onclick="restartGame()">
-🔄 REINICIAR
-</button>
+            </div>
 
-</div>
-</section>
+            <div class="turn-label">
+                LE TOCA A
+            </div>
 
+            <h2 id="gamePlayer">
+                Jugador
+            </h2>
 
-<section id="voteResultScreen" class="screen">
-<div class="card">
+            <div id="gameCategory" class="category">
+                Pregunta
+            </div>
 
-<h2>🗳️ Resultado</h2>
+            <div id="gameQuestion" class="big-question">
+                Pregunta
+            </div>
 
-<div id="voteResults" class="results"></div>
+            <div id="gameExtra"></div>
 
-<button class="btn primary"
-onclick="nextVoteRound()">
-🎲 SIGUIENTE VOTACIÓN
-</button>
+            <button id="gameMainButton" class="btn primary">
+                SIGUIENTE →
+            </button>
 
-<button class="btn secondary"
-onclick="showScreen('gameTypeScreen')">
-🎮 CAMBIAR JUEGO
-</button>
+            <button class="btn secondary" onclick="restartGame()">
+                🔄 REINICIAR
+            </button>
 
-</div>
-</section>
+        </div>
 
+    </section>
 
-<section id="preferPlayerScreen" class="screen">
-<div class="card">
 
-<div class="header">
+    <!-- ================= ¿A QUIÉN? ================= -->
 
-<div class="badge">🤔 ¿QUÉ PREFIRIÓ?</div>
+    <section id="whoToScreen" class="screen">
 
-<div class="badge" id="preferRound">
-Ronda 1
-</div>
+        <div class="card">
 
-</div>
+            <div class="badge">👥 ¿A QUIÉN?</div>
 
-<div class="question-card">
+            <div class="turn-label">LE TOCA A</div>
 
-<div class="turn">LE TOCA ELEGIR A</div>
+            <h2 id="whoToPlayer">Jugador</h2>
 
-<div class="current-name" id="preferPlayerName">
-Jugador
-</div>
+            <div id="whoToQuestion" class="big-question">
+                Pregunta
+            </div>
 
-<div class="question-text" id="preferQuestion">
-Pregunta
-</div>
+            <div id="whoToChoices" class="choice-list"></div>
 
-</div>
+            <div id="whoToResult" class="result-box"></div>
 
-<div class="option-buttons">
+            <button id="whoToNext" class="btn primary hidden">
+                SIGUIENTE →
+            </button>
 
-<button class="choice"
-id="choiceA"
-onclick="playerChoose('A')">
-Opción A
-</button>
+            <button class="btn secondary" onclick="restartGame()">
+                🔄 REINICIAR
+            </button>
 
-<button class="choice"
-id="choiceB"
-onclick="playerChoose('B')">
-Opción B
-</button>
+        </div>
 
-</div>
+    </section>
 
-<button class="btn primary"
-id="confirmPrefer"
-onclick="confirmPreferChoice()"
-disabled>
-CONFIRMAR ELECCIÓN
-</button>
 
-</div>
-</section>
+    <!-- ================= CONTINÚA ================= -->
 
+    <section id="continueScreen" class="screen">
 
-<section id="preferGuessScreen" class="screen">
-<div class="card">
+        <div class="card">
 
-<div class="header">
+            <div class="badge">🔄 CONTINÚA</div>
 
-<div class="badge">🤔 ADIVINA</div>
+            <div class="turn-label">LE TOCA A</div>
 
-<div class="badge" id="guessProgress">
-1 / 2
-</div>
+            <h2 id="continuePlayer">Jugador</h2>
 
-</div>
+            <div id="continueQuestion" class="big-question">
+                Pregunta
+            </div>
 
-<div class="question-card">
+            <textarea
+                id="continueAnswer"
+                placeholder="Escribe tu respuesta..."
+            ></textarea>
 
-<div class="turn">¿QUÉ CREES QUE ELIGIÓ?</div>
+            <p class="instruction">
+                Responde y después crea una pregunta relacionada con tu respuesta.
+            </p>
 
-<div class="current-name" id="guessPlayerName">
-Jugador
-</div>
+            <button class="btn primary" onclick="continueNext()">
+                SIGUIENTE →
+            </button>
 
-<div class="question-text" id="guessQuestion">
-Pregunta
-</div>
+            <button class="btn secondary" onclick="restartGame()">
+                🔄 REINICIAR
+            </button>
 
-</div>
+        </div>
 
-<div class="option-buttons">
+    </section>
 
-<button class="choice"
-id="guessA"
-onclick="makeGuess('A')">
-A
-</button>
 
-<button class="choice"
-id="guessB"
-onclick="makeGuess('B')">
-B
-</button>
+    <!-- ================= CAMBIA DE OPINIÓN ================= -->
 
-</div>
+    <section id="opinionScreen" class="screen">
 
-<button class="btn primary"
-id="nextGuessButton"
-onclick="nextGuesser()"
-disabled>
-SIGUIENTE →
-</button>
+        <div class="card">
 
-</div>
-</section>
+            <div class="badge">🔄 CAMBIA DE OPINIÓN</div>
 
+            <div class="turn-label">JUGADOR PRINCIPAL</div>
 
-<section id="preferResultScreen" class="screen">
-<div class="card">
+            <h2 id="opinionPlayer">Jugador</h2>
 
-<h2>🤔 Resultado</h2>
+            <div id="opinionQuestion" class="big-question">
+                Pregunta
+            </div>
 
-<div id="preferResults"></div>
+            <div id="opinionArea"></div>
 
-<button class="btn primary"
-onclick="startPreferRound()">
-🎲 OTRA RONDA
-</button>
+            <button class="btn secondary" onclick="restartGame()">
+                🔄 REINICIAR
+            </button>
 
-<button class="btn secondary"
-onclick="showScreen('gameTypeScreen')">
-🎮 CAMBIAR JUEGO
-</button>
+        </div>
 
-</div>
-</section>
+    </section>
 
 
-<section id="questionFinalScreen" class="screen">
-<div class="card">
+    <!-- ================= ORDÉNENSE ================= -->
 
-<h2>🏆 Resultado</h2>
+    <section id="orderScreen" class="screen">
 
-<div id="questionScores"></div>
+        <div class="card">
 
-<div class="final-message" id="finalChallenge"></div>
+            <div class="badge">🔢 ORDÉNENSE</div>
 
-<button class="btn primary"
-onclick="showScreen('gameTypeScreen')">
-🎮 JUGAR OTRA COSA
-</button>
+            <div class="turn-label">LE TOCA A</div>
 
-</div>
-</section>
+            <h2 id="orderPlayer">Jugador</h2>
+
+            <div id="orderQuestion" class="big-question">
+                Pregunta
+            </div>
+
+            <p class="instruction">
+                Usa ↑ y ↓ para ordenar a los demás.
+            </p>
+
+            <div id="orderList" class="order-list"></div>
+
+            <button class="btn primary" onclick="finishOrder()">
+                TERMINÉ →
+            </button>
+
+            <button class="btn secondary" onclick="restartGame()">
+                🔄 REINICIAR
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= ADIVINA ================= -->
+
+    <section id="guessScreen" class="screen">
+
+        <div class="card">
+
+            <div class="badge">🕵️ ADIVINA AL JUGADOR</div>
+
+            <div id="guessProgress" class="progress">
+                Jugador 1
+            </div>
+
+            <div id="guessQuestion" class="big-question">
+                Pregunta
+            </div>
+
+            <h3 id="guessCurrentPlayer">
+                Jugador
+            </h3>
+
+            <textarea
+                id="guessInput"
+                placeholder="Escribe tu respuesta..."
+            ></textarea>
+
+            <div id="guessHiddenAnswer" class="hidden-answer"></div>
+
+            <div id="guessChoices" class="choice-list"></div>
+
+            <button id="guessButton" class="btn primary" onclick="submitGuessAnswer()">
+                GUARDAR
+            </button>
+
+            <button class="btn secondary" onclick="restartGame()">
+                🔄 REINICIAR
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= CREERÍAS ================= -->
+
+    <section id="believeScreen" class="screen">
+
+        <div class="card">
+
+            <div class="badge">🧠 ¿CREERÍAS SI...?</div>
+
+            <div class="turn-label">
+                SOBRE
+            </div>
+
+            <h2 id="believeTarget">
+                Jugador
+            </h2>
+
+            <div id="believeQuestion" class="big-question">
+                Pregunta
+            </div>
+
+            <div class="turn-label">
+                RESPONDE
+            </div>
+
+            <h3 id="believeAnswerer">
+                Jugador
+            </h3>
+
+            <div id="believeButtons" class="two-buttons">
+
+                <button class="choice yes" onclick="answerBelieve(true)">
+                    ✅ SÍ
+                </button>
+
+                <button class="choice no" onclick="answerBelieve(false)">
+                    ❌ NO
+                </button>
+
+            </div>
+
+            <div id="believeResult" class="result-box"></div>
+
+            <button class="btn secondary" onclick="restartGame()">
+                🔄 REINICIAR
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FINAL ================= -->
+
+    <section id="finalScreen" class="screen">
+
+        <div class="card">
+
+            <div class="logo-icon">🎉</div>
+
+            <h2>¡Partida terminada!</h2>
+
+            <div id="finalContent"></div>
+
+            <button class="btn primary" onclick="restartGame()">
+                🎮 JUGAR DE NUEVO
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= MODAL REGLAS ================= -->
+
+    <div id="rulesModal" class="modal">
+
+        <div class="modal-card">
+
+            <h2>🎮 Entreteni2</h2>
+
+            <p>
+                La idea de Entreteni2 es que tengan cosas de qué hablar,
+                se rían y conozcan mejor a los demás.
+            </p>
+
+            <p>
+                Cada modo funciona diferente. Algunos hacen preguntas,
+                otros crean situaciones o hacen que el grupo tome decisiones.
+            </p>
+
+            <p>
+                🌶️ El modo picante utiliza temas personales, secretos,
+                atracción, celos y situaciones sociales, pero sin contenido explícito.
+            </p>
+
+            <p>
+                👥 El género solamente se utiliza para evitar preguntas
+                románticas que no correspondan con la configuración del grupo.
+            </p>
+
+            <button class="btn primary" onclick="closeRules()">
+                ENTENDIDO
+            </button>
+
+        </div>
+
+    </div>
 
 </div>
 
